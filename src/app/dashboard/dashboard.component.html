@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone</th>
+              <th scope="col">City</th>
+              <th scope="col">
+                <button class="btn btn-success btn-sm px-3" data-toggle="modal" data-target="#userModal" (click)="addUser()"> + Add User</button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users; let i=index">
+              <th scope="row">{{i+1}}</th>
+              <td>{{user.name}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.phone}}</td>
+              <td>{{user.city}}</td>
+              <td>
+                <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#userModal" (click)="updateUser(user)">Edit</button>
+                <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmModal" (click)="onDelete(user.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- User Modal -->
+
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="userModalLabel">{{modalHeading}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form (ngSubmit)="onSubmit()" #f="ngForm">
+      <div class="modal-body">
+        <div class="alert alert-danger" role="alert" *ngIf = "isError"> {{errorMessage}}</div>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" [(ngModel)]="selecteduser.name" name="name" required>
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" [(ngModel)]="selecteduser.email" name="email" required>
+            <label for="phone">Phone</label>
+            <input type="text" class="form-control" id="phone" [(ngModel)]="selecteduser.phone" name="phone" required>
+            <label for="city">City</label>
+            <input type="text" class="form-control" id="city" [(ngModel)]="selecteduser.city" name="city">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!f.valid">{{modalbtn}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmModalLabel">Confirm</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Do yur want to delete this user data
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" (click)="deleteUser()">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
